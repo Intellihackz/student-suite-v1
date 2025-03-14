@@ -35,7 +35,7 @@ export const HeroHeader = () => {
                                 href="/"
                                 aria-label="home"
                                 className="flex items-center space-x-2">
-                                <Logo />
+                                <Logo rotation={75}  />
                             </Link>
 
                             <button
