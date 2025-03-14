@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
-
+import { Analytics } from "@vercel/analytics/next";
 export const metadata: Metadata = {
   title: "StudentSuite: The All-in-One Productivity Hub for Students",
   description:
@@ -21,18 +21,18 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Your Friend's Name/Student Suite Team", // Replace with the actual author/team name
-      url: "https://studentsuite.com", // Replace with your website URL
+      url: "https://student-suite.vercel.app", // Replace with your website URL
     },
   ],
   openGraph: {
     title: "StudentSuite: The All-in-One Productivity Hub for Students",
     description:
       "Streamline your academic life with StudentSuite. Manage schedules, track assignments, take notes, and collaborate with classmates—all in one powerful platform.",
-    url: "https://studentsuite.com", // Replace with your website URL
+    url: "https://student-suite.vercel.app", // Replace with your website URL
     siteName: "StudentSuite",
     images: [
       {
-        url: "https://studentsuite.com/og-image.png", // Replace with your actual OG image URL
+        url: "/og-image.png", // Replace with your actual OG image URL
         width: 1200,
         height: 630,
         alt: "StudentSuite - The Ultimate Productivity Hub for Students",
@@ -68,6 +68,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Analytics />
           </ThemeProvider>
         </body>
       </html>
