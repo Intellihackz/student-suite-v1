@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
+import { ClerkProvider } from '@clerk/nextjs';
+
 export const metadata: Metadata = {
   title: "StudentSuite: The All-in-One Productivity Hub for Students",
   description:
@@ -57,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <head />
         <body>
@@ -72,6 +74,6 @@ export default function RootLayout({
           </ThemeProvider>
         </body>
       </html>
-    </>
+    </ClerkProvider>
   );
 }
