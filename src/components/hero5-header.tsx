@@ -12,7 +12,6 @@ const menuItems = [
     { name: 'Features', href: '#features' },
     { name: 'About', href: '#about' },
     { name: 'Pricing', href: '#pricing' },
-    { name: 'Dashboard', href: '/dashboard' }, // Added dashboard link
 ]
 
 export const HeroHeader = () => {
@@ -81,7 +80,12 @@ export const HeroHeader = () => {
                             </div>
                             <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                                 {isSignedIn ? (
-                                    <UserButton afterSignOutUrl="/" />
+                                    <div className="flex items-center space-x-4 bg-accent rounded-full px-4 py-1 text-accent-foreground">
+                                        <Link href="/dashboard" className="text-muted-foreground hover:text-accent-foreground text-xsxl">
+                                            <span>Go to Dashboard {'>'}</span>
+                                        </Link>
+                                        <UserButton afterSignOutUrl="/" />
+                                    </div>
                                 ) : (
                                     <>
                                         <SignInButton mode="modal">
