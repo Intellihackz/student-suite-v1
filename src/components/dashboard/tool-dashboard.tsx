@@ -3,18 +3,20 @@
 import { useEffect, useState } from "react";
 import { ToolCard } from "./tool-card";
 import { AnimatedGroup } from "@/components/ui/animated-group";
-import { useUser } from "@clerk/nextjs";
 import { 
   Calendar, 
   ClipboardList, 
   BookOpen, 
   FileText, 
-  Users, 
   Clock,
   Briefcase,
   LineChart,
   Lightbulb,
   Library,
+  Presentation,
+  Coffee,
+  CheckSquare,
+  Music,
   Search
 } from "lucide-react";
 
@@ -33,7 +35,7 @@ const tools: Tool[] = [
   {
     id: "calendar",
     name: "Class Schedule",
-    description: "Manage your class timetable and important dates",
+    description: "Basic calendar with event storage",
     icon: <Calendar className="h-6 w-6" />,
     color: "bg-blue-100 dark:bg-blue-950",
     href: "/dashboard/calendar",
@@ -41,7 +43,7 @@ const tools: Tool[] = [
   {
     id: "assignments",
     name: "Assignments",
-    description: "Track homework, projects, and due dates",
+    description: "Simple task tracker",
     icon: <ClipboardList className="h-6 w-6" />,
     color: "bg-green-100 dark:bg-green-950",
     href: "/dashboard/assignments",
@@ -49,7 +51,7 @@ const tools: Tool[] = [
   {
     id: "notes",
     name: "Study Notes",
-    description: "Organize your lecture notes and study materials",
+    description: "Markdown or rich text editor",
     icon: <BookOpen className="h-6 w-6" />,
     color: "bg-purple-100 dark:bg-purple-950",
     href: "/dashboard/notes",
@@ -57,31 +59,31 @@ const tools: Tool[] = [
   {
     id: "documents",
     name: "Documents",
-    description: "Store and access important academic documents",
+    description: "File storage system",
     icon: <FileText className="h-6 w-6" />,
     color: "bg-yellow-100 dark:bg-yellow-950",
     href: "/dashboard/documents",
   },
   {
-    id: "groups",
-    name: "Study Groups",
-    description: "Collaborate with classmates on group projects",
-    icon: <Users className="h-6 w-6" />,
-    color: "bg-red-100 dark:bg-red-950",
-    href: "/dashboard/groups",
-  },
-  {
     id: "pomodoro",
     name: "Study Timer",
-    description: "Stay focused with Pomodoro technique timers",
+    description: "Pomodoro timer",
     icon: <Clock className="h-6 w-6" />,
     color: "bg-orange-100 dark:bg-orange-950",
     href: "/dashboard/pomodoro",
   },
   {
+    id: "flashcards",
+    name: "Flashcards",
+    description: "Create, save, and study flashcards",
+    icon: <Lightbulb className="h-6 w-6" />,
+    color: "bg-pink-100 dark:bg-pink-950",
+    href: "/dashboard/flashcards",
+  },
+  {
     id: "career",
     name: "Career Planning",
-    description: "Explore career paths and internship opportunities",
+    description: "List of internships and career resources",
     icon: <Briefcase className="h-6 w-6" />,
     color: "bg-indigo-100 dark:bg-indigo-950",
     href: "/dashboard/career",
@@ -89,33 +91,57 @@ const tools: Tool[] = [
   {
     id: "progress",
     name: "Academic Progress",
-    description: "Track your grades and academic performance",
+    description: "Store and display grades",
     icon: <LineChart className="h-6 w-6" />,
     color: "bg-teal-100 dark:bg-teal-950",
     href: "/dashboard/progress",
   },
   {
-    id: "flashcards",
-    name: "Flashcards",
-    description: "Create and study with digital flashcards",
-    icon: <Lightbulb className="h-6 w-6" />,
-    color: "bg-pink-100 dark:bg-pink-950",
-    href: "/dashboard/flashcards",
-  },
-  {
     id: "resources",
     name: "Learning Resources",
-    description: "Access helpful educational resources and links",
+    description: "Curated links, PDFs, or articles",
     icon: <Library className="h-6 w-6" />,
     color: "bg-cyan-100 dark:bg-cyan-950",
     href: "/dashboard/resources",
+  },
+  {
+    id: "presentations",
+    name: "Presentations",
+    description: "A simple tool to store and preview slides",
+    icon: <Presentation className="h-6 w-6" />,
+    color: "bg-rose-100 dark:bg-rose-950",
+    href: "/dashboard/presentations",
+  },
+  {
+    id: "breaks",
+    name: "Break Planner",
+    description: "Simple task scheduler for breaks",
+    icon: <Coffee className="h-6 w-6" />,
+    color: "bg-amber-100 dark:bg-amber-950",
+    href: "/dashboard/breaks",
+  },
+  {
+    id: "tasks",
+    name: "Daily Tasks",
+    description: "Basic to-do list",
+    icon: <CheckSquare className="h-6 w-6" />,
+    color: "bg-emerald-100 dark:bg-emerald-950",
+    href: "/dashboard/tasks",
+  },
+  {
+    id: "music",
+    name: "Study Music",
+    description: "Embed Spotify/YouTube playlists",
+    icon: <Music className="h-6 w-6" />,
+    color: "bg-violet-100 dark:bg-violet-950",
+    href: "/dashboard/music",
   },
 ];
 
 export default function ToolDashboard() {
   const [mounted, setMounted] = useState(false);
+  const [userName, setUserName] = useState("Student");
   const [searchQuery, setSearchQuery] = useState("");
-  const { user, isLoaded } = useUser();
   
   // Filter tools based on search query
   const filteredTools = tools.filter(tool => 
@@ -125,9 +151,12 @@ export default function ToolDashboard() {
 
   useEffect(() => {
     setMounted(true);
+    // In a real app, you might fetch the user's name from an API or context
+    // For now, we'll use a static name
+    setUserName("Tobiloba");
   }, []);
 
-  if (!mounted || !isLoaded) {
+  if (!mounted) {
     return null;
   }
 
@@ -135,7 +164,7 @@ export default function ToolDashboard() {
     <div className="space-y-6">
       {/* User Greeting */}
       <div className="flex flex-col space-y-2">
-        <h1 className="text-3xl font-bold">Hi {user?.firstName || 'Student'}</h1>
+        <h1 className="text-3xl font-bold">Hi {userName}</h1>
         <p className="text-muted-foreground">Welcome to your student dashboard</p>
       </div>
       
