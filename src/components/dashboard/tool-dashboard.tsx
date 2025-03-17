@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { ToolCard } from "./tool-card";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { 
@@ -19,7 +19,7 @@ import {
   Music,
   Search
 } from "lucide-react";
-import { useAuth, useUser } from '@clerk/nextjs'
+import { useUser } from '@clerk/nextjs'
 
 // Tool interface to define the structure of each tool
 interface Tool {
@@ -140,8 +140,6 @@ const tools: Tool[] = [
 ];
 
 export default function ToolDashboard() {
-  const [mounted, setMounted] = useState(false);
-  const [userName, setUserName] = useState("Student");
   const [searchQuery, setSearchQuery] = useState("");
   const { user } = useUser()
   
@@ -151,16 +149,6 @@ export default function ToolDashboard() {
     tool.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  useEffect(() => {
-    setMounted(true);
-    // In a real app, you might fetch the user's name from an API or context
-    // For now, we'll use a static name
-    setUserName("Tobiloba");
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <div className="space-y-6">
