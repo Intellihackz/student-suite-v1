@@ -19,6 +19,7 @@ import {
   Music,
   Search
 } from "lucide-react";
+import { useAuth, useUser } from '@clerk/nextjs'
 
 // Tool interface to define the structure of each tool
 interface Tool {
@@ -142,6 +143,7 @@ export default function ToolDashboard() {
   const [mounted, setMounted] = useState(false);
   const [userName, setUserName] = useState("Student");
   const [searchQuery, setSearchQuery] = useState("");
+  const { user } = useUser()
   
   // Filter tools based on search query
   const filteredTools = tools.filter(tool => 
@@ -164,7 +166,7 @@ export default function ToolDashboard() {
     <div className="space-y-6">
       {/* User Greeting */}
       <div className="flex flex-col space-y-2">
-        <h1 className="text-3xl font-bold">Hi {userName}</h1>
+        <h1 className="text-3xl font-bold">Hi {user?.firstName}</h1>
         <p className="text-muted-foreground">Welcome to your student dashboard</p>
       </div>
       
